@@ -16,6 +16,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
+#include "ackermann_msgs/msg/ackermann_drive_stamped.hpp"
 using std::placeholders::_1;
 
 class MinimalSubscriber : public rclcpp::Node
@@ -24,16 +25,22 @@ public:
   MinimalSubscriber()
   : Node("minimal_subscriber")
   {
+    //sample code
     subscription_ = this->create_subscription<std_msgs::msg::String>(
       "topic", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
+
+    /*drive_subscription = this->create_subscription<ackermann_msgs::msg::AckermannDriveStamped>(
+      "drive", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));*/
   }
 
 private:
   void topic_callback(const std_msgs::msg::String::SharedPtr msg) const
+  //void topic_callback(const ackermann_msgs::msg::AckermannDriveStamped::SharedPtr msg) const
   {
     RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
   }
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
+  //rclcpp::Subscription<ackermann_msgs::msg::AckermannDriveStamped>::SharedPtr drive_subscription;
 };
 
 int main(int argc, char * argv[])

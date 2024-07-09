@@ -1,0 +1,3 @@
+[console_scripts]
+talker = lab1_package_py.talker:main
+
